@@ -1,3 +1,7 @@
+import login from './login';
+
 export default {
-  account: 'account',
+  message: {
+    ...login,
+  },
 }
