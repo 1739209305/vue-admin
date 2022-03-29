@@ -39,9 +39,11 @@
 
 <script lang="ts" setup>
 import { ref, reactive } from "vue";
-import type { FormInstance } from 'element-plus';
+import type { FormInstance } from "element-plus";
+import { useI18n } from 'vue-i18n';
 
 const ruleFormRef = ref<FormInstance>();
+const { t } = useI18n();
 
 const ruleForm = reactive({
   userName: "xin.yao",
@@ -50,7 +52,7 @@ const ruleForm = reactive({
 
 const validateUsername = (rule: any, value: any, callback: any) => {
   if (value === "") {
-    callback(new Error("请输入您的账号"));
+    callback(new Error(t('message.login.userRequired')));
   } else {
     callback();
   }
@@ -58,7 +60,7 @@ const validateUsername = (rule: any, value: any, callback: any) => {
 
 const validatePassword = (rule: any, value: any, callback: any) => {
   if (value === "") {
-    callback(new Error("请输入您的密码"));
+    callback(new Error(t('message.login.passRequired')));
   } else {
     callback();
   }
@@ -73,18 +75,16 @@ const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.validate((valid) => {
     if (valid) {
-      console.log('submit!');
+      console.log("submit!");
     } else {
-      console.log('error submit!')
+      console.log("error submit!");
       return false;
     }
-  })
-}
-
+  });
+};
 </script>
 
 <style scoped lang="scss">
-
 .login {
   position: relative;
   width: 100%;
