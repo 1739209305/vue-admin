@@ -2,9 +2,20 @@
   <div class="login">
     <div class="container">
       <div class="login-title">{{ $t('message.login.title') }}</div>
-      <el-form ref="ruleFormRef" :model="ruleForm" status-icon :rules="rules" class="form">
+      <el-form
+        ref="ruleFormRef"
+        :model="ruleForm"
+        status-icon
+        :rules="rules"
+        class="form"
+      >
         <el-form-item prop="userName">
-          <el-input v-model="ruleForm.userName" class="input" size="small" maxlength="12">
+          <el-input
+            v-model="ruleForm.userName"
+            class="input"
+            size="small"
+            maxlength="12"
+          >
             <template #prepend>
               <i class="el-icon-user"></i>
             </template>
@@ -29,7 +40,8 @@
             size="small"
             class="login-btn"
             @click="submitForm(ruleFormRef)"
-          >{{ $t('message.login.btn') }}</el-button>
+            >{{ $t('message.login.btn') }}</el-button
+          >
         </el-form-item>
         <div class="login-tips">{{ $t('message.login.tips') }}</div>
       </el-form>
@@ -41,6 +53,7 @@
 import { ref, reactive } from 'vue'
 import type { FormInstance } from 'element-plus'
 import { useI18n } from 'vue-i18n'
+import { validName } from '../../utils/validate'
 
 const ruleFormRef = ref<FormInstance>()
 const { t } = useI18n()
@@ -53,6 +66,8 @@ const ruleForm = reactive({
 const validateUsername = (rule: any, value: any, callback: any) => {
   if (value === '') {
     callback(new Error(t('message.login.userRequired')))
+  } else if (!validName(value)) {
+    callback(new Error(t('message.login.validateUser')))
   } else {
     callback()
   }
@@ -61,6 +76,8 @@ const validateUsername = (rule: any, value: any, callback: any) => {
 const validatePassword = (rule: any, value: any, callback: any) => {
   if (value === '') {
     callback(new Error(t('message.login.passRequired')))
+  } else if (!validName(value)) {
+    callback(new Error(t('message.login.validatePass')))
   } else {
     callback()
   }
