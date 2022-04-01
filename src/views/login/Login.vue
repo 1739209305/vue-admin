@@ -38,50 +38,50 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive } from "vue";
-import type { FormInstance } from "element-plus";
-import { useI18n } from 'vue-i18n';
+import { ref, reactive } from 'vue'
+import type { FormInstance } from 'element-plus'
+import { useI18n } from 'vue-i18n'
 
-const ruleFormRef = ref<FormInstance>();
-const { t } = useI18n();
+const ruleFormRef = ref<FormInstance>()
+const { t } = useI18n()
 
 const ruleForm = reactive({
-  userName: "xin.yao",
-  password: "123456",
-});
+  userName: 'xin.yao',
+  password: '123456'
+})
 
 const validateUsername = (rule: any, value: any, callback: any) => {
-  if (value === "") {
-    callback(new Error(t('message.login.userRequired')));
+  if (value === '') {
+    callback(new Error(t('message.login.userRequired')))
   } else {
-    callback();
+    callback()
   }
-};
+}
 
 const validatePassword = (rule: any, value: any, callback: any) => {
-  if (value === "") {
-    callback(new Error(t('message.login.passRequired')));
+  if (value === '') {
+    callback(new Error(t('message.login.passRequired')))
   } else {
-    callback();
+    callback()
   }
-};
+}
 
 const rules = reactive({
-  userName: [{ validator: validateUsername, trigger: "blur" }],
-  password: [{ validator: validatePassword, trigger: "blur" }],
-});
+  userName: [{ validator: validateUsername, trigger: 'blur' }],
+  password: [{ validator: validatePassword, trigger: 'blur' }]
+})
 
 const submitForm = (formEl: FormInstance | undefined) => {
-  if (!formEl) return;
+  if (!formEl) return
   formEl.validate((valid) => {
     if (valid) {
-      console.log("submit!");
+      console.log('submit!')
     } else {
-      console.log("error submit!");
-      return false;
+      console.log('error submit!')
+      return false
     }
-  });
-};
+  })
+}
 </script>
 
 <style scoped lang="scss">
@@ -89,7 +89,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
   position: relative;
   width: 100%;
   height: 100%;
-  background-image: url("../../assets/slider00.jpg");
+  background-image: url('../../assets/slider00.jpg');
   background-size: 100%;
 
   .container {
@@ -118,10 +118,10 @@ const submitForm = (formEl: FormInstance | undefined) => {
     }
 
     .login-tips {
-      line-height: 50px;
       color: #fff;
       font-size: 12px;
       text-align: left;
+      margin-top: -8px;
     }
   }
 }
