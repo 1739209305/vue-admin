@@ -22,10 +22,10 @@ export function validEmail(email) {
 
 /**
  * @param {string} name
- * @description The value is a string of 26 letters, digits, and underscores
+ * @description The value is a string of 26 letters, digits, .and underscores
  * @returns {Boolean}
  */
 export function validName(email) {
-  const reg = /^\w+$/
+  const reg = /^[\w\.]+$/
   return reg.test(email)
 }

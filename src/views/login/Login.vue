@@ -51,9 +51,11 @@
 
 <script lang="ts" setup>
 import { ref, reactive } from 'vue'
-import type { FormInstance } from 'element-plus'
+import { FormInstance, ElMessage } from 'element-plus'
 import { useI18n } from 'vue-i18n'
-import { validName } from '../../utils/validate'
+import { validName } from '@/utils/validate'
+import { accountInfoApi } from '@/api/account'
+import { RoleEnum } from '@/enums/userEnum'
 
 const ruleFormRef = ref<FormInstance>()
 const { t } = useI18n()
@@ -92,7 +94,26 @@ const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return
   formEl.validate((valid) => {
     if (valid) {
-      console.log('submit!')
+      console.log(ruleForm)
+      // 正常应该向后端发送请求，判断是否已经有身份，能否登录，并且返回用户的详细信息
+      // 这里只模拟了一个接口，接口返回用户的基本信息、
+      // xin.yao 为管理员账号， visitor为游客
+      if (ruleForm.userName === 'xin.yao' && ruleForm.password === '123456') {
+        accountInfoApi().then((res: any) => {
+          const userInfo = res.result
+          userInfo.role = RoleEnum.SUPER
+        })
+      } else if (
+        ruleForm.userName === 'visitor' &&
+        ruleForm.password === '123456'
+      ) {
+        accountInfoApi().then((res: any) => {
+          const userInfo = res.result
+          userInfo.role = RoleEnum.VISITOR
+        })
+      } else {
+        ElMessage.error(t('message.login.failed'))
+      }
     } else {
       console.log('error submit!')
       return false
@@ -106,8 +127,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
   position: relative;
   width: 100%;
   height: 100%;
-  background-image: url('../../assets/slider00.jpg');
-  background-size: 100%;
+  background-image: url('../../assets/login_back.jpg');
 
   .container {
     position: absolute;

@@ -2,10 +2,11 @@ export default {
   login: {
     title: 'xin.yao Manage System',
     btn: 'Login',
-    tips: 'You can enter your account and password at will',
+    tips: 'xin.yao is the administrator account, visitor is the visitor account, the password is 123456',
     userRequired: 'Please input userName!',
     passRequired: 'Please input password!',
     validateUser: 'please input valid username',
-    validatePass: 'please input valid password'
+    validatePass: 'please input valid password',
+    failed: 'Login failed. Please check the account password'
   }
 }

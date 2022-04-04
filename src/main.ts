@@ -6,5 +6,6 @@ import store from './store'
 import ElementPlus from 'element-plus'
 import 'element-plus/lib/theme-chalk/index.css'
 import i18n from './locales/i18n'
+import './mock/_createMock'
 
 createApp(App).use(store).use(router).use(ElementPlus).use(i18n).mount('#app')
