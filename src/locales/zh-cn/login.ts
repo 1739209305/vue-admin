@@ -7,6 +7,7 @@ export default {
     passRequired: '请输入密码!',
     validateUser: '请输入合法的用户名',
     validatePass: '请输入合法的密码',
+    success: '登录成功',
     failed: '登录失败，请检查账号密码'
   }
 }

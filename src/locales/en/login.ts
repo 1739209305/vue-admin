@@ -7,6 +7,7 @@ export default {
     passRequired: 'Please input password!',
     validateUser: 'please input valid username',
     validatePass: 'please input valid password',
+    success: 'Login success',
     failed: 'Login failed. Please check the account password'
   }
 }

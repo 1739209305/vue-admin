@@ -6,3 +6,12 @@ export interface AccountModel {
   phone: string
   address: string
 }
+
+export interface LoginModel {
+  userName: string
+  password: string
+}
+
+export interface CheckModel {
+  type: string
+}

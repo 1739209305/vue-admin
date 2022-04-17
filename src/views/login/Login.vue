@@ -2,20 +2,9 @@
   <div class="login">
     <div class="container">
       <div class="login-title">{{ $t('message.login.title') }}</div>
-      <el-form
-        ref="ruleFormRef"
-        :model="ruleForm"
-        status-icon
-        :rules="rules"
-        class="form"
-      >
+      <el-form ref="ruleFormRef" :model="ruleForm" status-icon :rules="rules" class="form">
         <el-form-item prop="userName">
-          <el-input
-            v-model="ruleForm.userName"
-            class="input"
-            size="small"
-            maxlength="12"
-          >
+          <el-input v-model="ruleForm.userName" class="input" size="small" maxlength="12">
             <template #prepend>
               <i class="el-icon-user"></i>
             </template>
@@ -40,8 +29,7 @@
             size="small"
             class="login-btn"
             @click="submitForm(ruleFormRef)"
-            >{{ $t('message.login.btn') }}</el-button
-          >
+          >{{ $t('message.login.btn') }}</el-button>
         </el-form-item>
         <div class="login-tips">{{ $t('message.login.tips') }}</div>
       </el-form>
@@ -54,8 +42,8 @@ import { ref, reactive } from 'vue'
 import { FormInstance, ElMessage } from 'element-plus'
 import { useI18n } from 'vue-i18n'
 import { validName } from '@/utils/validate'
-import { accountInfoApi } from '@/api/account'
-import { RoleEnum } from '@/enums/userEnum'
+import { checkLoginApi } from '@/api/account'
+import { RoleEnum, LoginResultEnum } from '@/enums/userEnum'
 
 const ruleFormRef = ref<FormInstance>()
 const { t } = useI18n()
@@ -94,26 +82,14 @@ const submitForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return
   formEl.validate((valid) => {
     if (valid) {
-      console.log(ruleForm)
-      // 正常应该向后端发送请求，判断是否已经有身份，能否登录，并且返回用户的详细信息
-      // 这里只模拟了一个接口，接口返回用户的基本信息、
-      // xin.yao 为管理员账号， visitor为游客
-      if (ruleForm.userName === 'xin.yao' && ruleForm.password === '123456') {
-        accountInfoApi().then((res: any) => {
-          const userInfo = res.result
-          userInfo.role = RoleEnum.SUPER
-        })
-      } else if (
-        ruleForm.userName === 'visitor' &&
-        ruleForm.password === '123456'
-      ) {
-        accountInfoApi().then((res: any) => {
-          const userInfo = res.result
-          userInfo.role = RoleEnum.VISITOR
-        })
-      } else {
-        ElMessage.error(t('message.login.failed'))
-      }
+      checkLoginApi(ruleForm).then((res: any) => {
+        console.log(res)
+        if (res.result.type === LoginResultEnum.SUCCESS) {
+          ElMessage.success(t('message.login.success'))
+        } else {
+          ElMessage.error(t('message.login.failed'))
+        }
+      })
     } else {
       console.log('error submit!')
       return false
