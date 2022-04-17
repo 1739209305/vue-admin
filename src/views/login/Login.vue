@@ -44,9 +44,11 @@ import { useI18n } from 'vue-i18n'
 import { validName } from '@/utils/validate'
 import { checkLoginApi } from '@/api/account'
 import { RoleEnum, LoginResultEnum } from '@/enums/userEnum'
+import { useRouter } from 'vue-router'
 
 const ruleFormRef = ref<FormInstance>()
 const { t } = useI18n()
+const $router = useRouter()
 
 const ruleForm = reactive({
   userName: 'xin.yao',
@@ -83,9 +85,9 @@ const submitForm = (formEl: FormInstance | undefined) => {
   formEl.validate((valid) => {
     if (valid) {
       checkLoginApi(ruleForm).then((res: any) => {
-        console.log(res)
         if (res.result.type === LoginResultEnum.SUCCESS) {
           ElMessage.success(t('message.login.success'))
+          $router.push({ path: '/main' })
         } else {
           ElMessage.error(t('message.login.failed'))
         }
