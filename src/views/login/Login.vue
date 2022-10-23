@@ -2,9 +2,20 @@
   <div class="login">
     <div class="container">
       <div class="login-title">{{ $t('message.login.title') }}</div>
-      <el-form ref="ruleFormRef" :model="ruleForm" status-icon :rules="rules" class="form">
+      <el-form
+        ref="ruleFormRef"
+        :model="ruleForm"
+        status-icon
+        :rules="rules"
+        class="form"
+      >
         <el-form-item prop="userName">
-          <el-input v-model="ruleForm.userName" class="input" size="small" maxlength="12">
+          <el-input
+            v-model="ruleForm.userName"
+            class="input"
+            size="small"
+            maxlength="12"
+          >
             <template #prepend>
               <i class="el-icon-user"></i>
             </template>
@@ -29,7 +40,8 @@
             size="small"
             class="login-btn"
             @click="submitForm(ruleFormRef)"
-          >{{ $t('message.login.btn') }}</el-button>
+            >{{ $t('message.login.btn') }}</el-button
+          >
         </el-form-item>
         <div class="login-tips">{{ $t('message.login.tips') }}</div>
       </el-form>
@@ -43,8 +55,8 @@ import { FormInstance, ElMessage } from 'element-plus'
 import { useI18n } from 'vue-i18n'
 import { validName } from '@/utils/validate'
 import { checkLoginApi } from '@/api/account'
-import { RoleEnum, LoginResultEnum } from '@/enums/userEnum'
 import { useRouter } from 'vue-router'
+import { ResponseEnum } from '@/enums/responseEnum'
 
 const ruleFormRef = ref<FormInstance>()
 const { t } = useI18n()
@@ -85,7 +97,8 @@ const submitForm = (formEl: FormInstance | undefined) => {
   formEl.validate((valid) => {
     if (valid) {
       checkLoginApi(ruleForm).then((res: any) => {
-        if (res.result.type === LoginResultEnum.SUCCESS) {
+        console.log(res)
+        if (res.type === ResponseEnum.SUCCESS) {
           ElMessage.success(t('message.login.success'))
           $router.push({ path: '/main' })
         } else {

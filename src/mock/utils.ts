@@ -1,9 +1,11 @@
+import { ResponseEnum } from '@/enums/responseEnum'
+
 export function resultSuccess<T>(result: T, { message = 'ok' } = {}) {
   return {
-    code: 0,
+    code: 200,
     result,
     message,
-    type: 'success'
+    type: ResponseEnum.SUCCESS
   }
 }
 
@@ -15,6 +17,6 @@ export function resultError(
     code,
     result,
     message,
-    type: 'error'
+    type: ResponseEnum.FAILED
   }
 }
